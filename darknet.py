@@ -149,91 +149,91 @@ def darknet19_binary(input_shape, num_classes=10):
     inputs = Input(shape=input_shape)     
     
     # Layer 0
+    x = sRelu(inputs)
     x = BinaryConv2D(32, (3,3), strides=(1,1), padding='same', name='conv_1', use_bias=False)(inputs)
-    x = sRelu(x)
     
     # Layer 1
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 2
-    x = BinaryConv2D(64, (3,3), strides=(1,1), padding='same', name='conv_2', use_bias=False)(x)
     x = sRelu(x)
-    
+    x = BinaryConv2D(64, (3,3), strides=(1,1), padding='same', name='conv_2', use_bias=False)(x)
+
     # Layer 3
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 4
-    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_3', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_3', use_bias=False)(x)
 
     # Layer 5
-    x = BinaryConv2D(64, (1,1), strides=(1,1), padding='same', name='conv_4', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(64, (1,1), strides=(1,1), padding='same', name='conv_4', use_bias=False)(x)
 
     # Layer 6
-    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_5', use_bias=False)(x)
     x = sRelu(x)
-    
+    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_5', use_bias=False)(x)
+
     # Layer 7
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 8
-    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_6', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_6', use_bias=False)(x)
 
     # Layer 9
-    x = BinaryConv2D(128, (1,1), strides=(1,1), padding='same', name='conv_7', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(128, (1,1), strides=(1,1), padding='same', name='conv_7', use_bias=False)(x)
 
     # Layer 10
-    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_8', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_8', use_bias=False)(x)
     
     # Layer 11
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 12
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_9', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_9', use_bias=False)(x)
 
     # Layer 13
-    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_10', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_10', use_bias=False)(x)
 
     # Layer 14
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_11', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_11', use_bias=False)(x)
 
     # Layer 15
-    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_12', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_12', use_bias=False)(x)
 
     # Layer 16
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_13', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_13', use_bias=False)(x)
 
     #Layer 17
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 18
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_14', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_14', use_bias=False)(x)
 
     # Layer 19
-    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_15', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_15', use_bias=False)(x)
 
     # Layer 20
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_16', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_16', use_bias=False)(x)
 
     # Layer 21
-    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_17', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_17', use_bias=False)(x)
 
     # Layer 22
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_18', use_bias=False)(x)
     x = sRelu(x)
+    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_18', use_bias=False)(x)
 
     # Layer 23
     x = Conv2D(num_classes, (1,1), strides=(1,1), padding='same', name='conv_19', use_bias=False)(x)
