@@ -107,22 +107,26 @@ class LR_WarmRestart(tensorflow.keras.callbacks.Callback):
         self.ThisBatch = self.ThisBatch + 1.0
  
        
-def plot_history(history):
+def plot_history(history,epochs):
     
-    epochs = len(history['loss'])
+    
+    #print (history.history.keys())
+    epochs = len(history.history['loss'])
+    
+
     plt.figure(figsize=(16,4))
     plt.subplot(121)
-    plt.plot(range(1, epochs+1), history['loss'], label='loss')
-    plt.plot(range(1, epochs+1), history['val_loss'],'g',label='val_loss')
-    min_pos = np.argmin(history['val_loss'])
-    min_value = history['val_loss'][min_pos]
+    plt.plot(range(1, epochs+1), history.history['loss'], label='loss')
+    plt.plot(range(1, epochs+1), history.history['val_loss'],'g',label='val_loss')
+    min_pos = np.argmin(history.history['val_loss'])
+    min_value = history.history['val_loss'][min_pos]
     plt.scatter(min_pos+1, min_value, color='green', marker='*', label='min = ({}, {:.4f})'.format(min_pos+1, min_value))
     plt.ylabel('loss'); plt.xlabel('epoch'); plt.legend(); plt.grid()
     plt.subplot(122)
-    plt.plot(range(1, epochs+1), history['acc'], label='acc')
-    plt.plot(range(1, epochs+1), history['val_acc'],'g',label='val_acc')
-    max_pos = np.argmax(history['val_acc'])
-    max_value = history['val_acc'][max_pos]
+    plt.plot(range(1, epochs+1), history.history['acc'], label='acc')
+    plt.plot(range(1, epochs+1), history.history['val_acc'],'g',label='val_acc')
+    max_pos = np.argmax(history.history['val_acc'])
+    max_value = history.history['val_acc'][max_pos]
     plt.scatter(max_pos+1, max_value, color='green', marker='*', label='max = ({}, {:.4f})'.format(max_pos+1, max_value))
     plt.ylabel('accuracy'); plt.xlabel('epoch'); plt.legend(); plt.grid()
     plt.show()

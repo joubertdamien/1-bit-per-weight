@@ -7,13 +7,14 @@ from tensorflow.keras.layers import AveragePooling2D, MaxPooling2D, Input, Globa
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.models import Model
 from ResNetModel import BinaryConv2D
+
     
 
 #***************************************************************************************************
 #Definition of Darknet2019. Follows https://pjreddie.com/darknet/imagenet/#darknet53
 # Inspired by https://github.com/jmpap/YOLOV2-Tensorflow-2.0/blob/master/Yolo_V2_tf_2.ipynb
 #***************************************************************************************************
-def darknet19(input_shape, num_classes=10):
+'''def darknet19(input_shape, num_classes=10):
 
     inputs = Input(shape=input_shape)     
     
@@ -134,110 +135,285 @@ def darknet19(input_shape, num_classes=10):
 
     # Instantiate model.
     model = Model(inputs=inputs, outputs=OutputPath)
-    return model
+    return model'''
 
 def sRelu(x):
     x=Lambda(lambda z: z + 1)(x)
     x = ReLU()(x)
     x=Lambda(lambda z: z - 1)(x)
     return x
-#
-#  Binary Darknet 2019
-#
-def darknet19_binary(input_shape, num_classes=10):
+def darknet19(input_shape, num_classes=10):
 
     inputs = Input(shape=input_shape)     
     
     # Layer 0
     x = sRelu(inputs)
-    x = BinaryConv2D(32, (3,3), strides=(1,1), padding='same', name='conv_1', use_bias=False)(inputs)
+    x = Conv2D(32, (3,3), strides=(1,1), padding='same', name='conv_1', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_1')(x)
+    x = sRelu(x)'''
     
     # Layer 1
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 2
     x = sRelu(x)
-    x = BinaryConv2D(64, (3,3), strides=(1,1), padding='same', name='conv_2', use_bias=False)(x)
-
+    x = Conv2D(64, (3,3), strides=(1,1), padding='same', name='conv_2', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_2')(x)
+    x = sRelu(x)'''
+    
     # Layer 3
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 4
     x = sRelu(x)
-    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_3', use_bias=False)(x)
+    x = Conv2D(128, (3,3), strides=(1,1), padding='same', name='conv_3', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_3')(x)
+    x = sRelu(x)'''
 
     # Layer 5
     x = sRelu(x)
-    x = BinaryConv2D(64, (1,1), strides=(1,1), padding='same', name='conv_4', use_bias=False)(x)
+    x = Conv2D(64, (1,1), strides=(1,1), padding='same', name='conv_4', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_4')(x)
+    x = sRelu(x)'''
 
     # Layer 6
     x = sRelu(x)
-    x = BinaryConv2D(128, (3,3), strides=(1,1), padding='same', name='conv_5', use_bias=False)(x)
-
+    x = Conv2D(128, (3,3), strides=(1,1), padding='same', name='conv_5', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_5')(x)
+    x = sRelu(x)'''
+    
     # Layer 7
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 8
     x = sRelu(x)
-    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_6', use_bias=False)(x)
+    x = Conv2D(256, (3,3), strides=(1,1), padding='same', name='conv_6', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_6')(x)
+    x = sRelu(x)'''
 
     # Layer 9
     x = sRelu(x)
-    x = BinaryConv2D(128, (1,1), strides=(1,1), padding='same', name='conv_7', use_bias=False)(x)
+    x = Conv2D(128, (1,1), strides=(1,1), padding='same', name='conv_7', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_7')(x)
+    x = sRelu(x)'''
 
     # Layer 10
     x = sRelu(x)
-    x = BinaryConv2D(256, (3,3), strides=(1,1), padding='same', name='conv_8', use_bias=False)(x)
+    x = Conv2D(256, (3,3), strides=(1,1), padding='same', name='conv_8', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_8')(x)
+    x = sRelu(x)'''
     
     # Layer 11
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 12
     x = sRelu(x)
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_9', use_bias=False)(x)
+    x = Conv2D(512, (3,3), strides=(1,1), padding='same', name='conv_9', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_9')(x)
+    x = sRelu(x)'''
 
     # Layer 13
     x = sRelu(x)
-    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_10', use_bias=False)(x)
+    x = Conv2D(256, (1,1), strides=(1,1), padding='same', name='conv_10', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_10')(x)
+    x = sRelu(x)'''
 
     # Layer 14
     x = sRelu(x)
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_11', use_bias=False)(x)
+    x = Conv2D(512, (3,3), strides=(1,1), padding='same', name='conv_11', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_11')(x)
+    x = sRelu(x)'''
 
     # Layer 15
     x = sRelu(x)
-    x = BinaryConv2D(256, (1,1), strides=(1,1), padding='same', name='conv_12', use_bias=False)(x)
+    x = Conv2D(256, (1,1), strides=(1,1), padding='same', name='conv_12', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_12')(x)
+    x = sRelu(x)'''
 
     # Layer 16
     x = sRelu(x)
-    x = BinaryConv2D(512, (3,3), strides=(1,1), padding='same', name='conv_13', use_bias=False)(x)
+    x = Conv2D(512, (3,3), strides=(1,1), padding='same', name='conv_13', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_13')(x)
+    x = sRelu(x)'''
 
     #Layer 17
     x = MaxPooling2D(pool_size=(2, 2))(x)
 
     # Layer 18
     x = sRelu(x)
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_14', use_bias=False)(x)
+    x = Conv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_14', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_14')(x)
+    x = sRelu(x)'''
 
     # Layer 19
     x = sRelu(x)
-    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_15', use_bias=False)(x)
+    x = Conv2D(512, (1,1), strides=(1,1), padding='same', name='conv_15', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_15')(x)
+    x = sRelu(x)'''
 
     # Layer 20
     x = sRelu(x)
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_16', use_bias=False)(x)
+    x = Conv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_16', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_16')(x)
+    x = sRelu(x)'''
 
     # Layer 21
     x = sRelu(x)
-    x = BinaryConv2D(512, (1,1), strides=(1,1), padding='same', name='conv_17', use_bias=False)(x)
+    x = Conv2D(512, (1,1), strides=(1,1), padding='same', name='conv_17', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_17')(x)
+    x = sRelu(x)'''
 
     # Layer 22
     x = sRelu(x)
-    x = BinaryConv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_18', use_bias=False)(x)
+    x = Conv2D(1024, (3,3), strides=(1,1), padding='same', name='conv_18', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_18')(x)
+    x = sRelu(x)'''
 
     # Layer 23
-    x = Conv2D(num_classes, (1,1), strides=(1,1), padding='same', name='conv_19', use_bias=False)(x)
+    x = sRelu(x)
+    x = Conv2D(num_classes, (1,1), strides=(1,1), padding='same', name='conv_19', use_bias=True)(x)
+    '''x = BatchNormalization(name='norm_19')(x)
+    x = sRelu(x)'''
 
+    # Layer 24 
+    x = GlobalAveragePooling2D()(x)
+    
+    OutputPath = Activation('softmax')(x)
+
+    # Instantiate model.
+    model = Model(inputs=inputs, outputs=OutputPath)
+    return model
+
+#
+#  Binary Darknet 2019
+#
+def darknet19_binary(input_shape, num_classes=10):
+
+    inputs = Input(shape=input_shape)     
+
+
+    # Layer 0
+    x = sRelu(inputs)
+    x = BinaryConv2D(32,kernel_size=3,strides=(1,1), padding='same', name='conv_1', use_bias=False)(x)
+    x = BatchNormalization(name='norm_1')(x)
+    
+    # Layer 1
+    x = MaxPooling2D(pool_size=(2, 2),padding="same")(x)
+
+    # Layer 2
+    x = sRelu(x)
+    x = BinaryConv2D(64, kernel_size=3, strides=(1,1), padding='same', name='conv_2', use_bias=False)(x)
+    x = BatchNormalization(name='norm_2')(x)
+    
+    # Layer 3
+    x = MaxPooling2D(pool_size=(2, 2),padding="same")(x)
+
+    # Layer 4
+    x = sRelu(x)
+    x = BinaryConv2D(128,kernel_size=3, strides=(1,1), padding='same', name='conv_3', use_bias=False)(x)
+    x = BatchNormalization(name='norm_3')(x)
+
+    # Layer 5
+    x = sRelu(x)
+    x = BinaryConv2D(64, kernel_size=1, strides=(1,1), padding='same', name='conv_4', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_4')(x)
+
+    # Layer 6
+    x = sRelu(x)
+    x = BinaryConv2D(128, kernel_size=3, strides=(1,1), padding='same', name='conv_5', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_5')(x)
+    
+    # Layer 7
+    x = MaxPooling2D(pool_size=(2, 2),padding="same")(x)
+
+    # Layer 8
+    x = sRelu(x)
+    x = BinaryConv2D(256, kernel_size=3, strides=(1,1), padding='same', name='conv_6', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_6')(x)
+
+    # Layer 9
+    x = sRelu(x)
+    x = BinaryConv2D(128, kernel_size=1, strides=(1,1), padding='same', name='conv_7', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_7')(x)
+
+    # Layer 10
+    x = sRelu(x)
+    x = BinaryConv2D(256, kernel_size=3, strides=(1,1), padding='same', name='conv_8', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_8')(x)
+    
+    # Layer 11
+    x = MaxPooling2D(pool_size=(2, 2),padding="same")(x)
+
+    # Layer 12
+    x = sRelu(x)
+    x = BinaryConv2D(512, kernel_size=3, strides=(1,1), padding='same', name='conv_9', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_9')(x)
+
+    # Layer 13
+    x = sRelu(x)
+    x = BinaryConv2D(256, kernel_size=1, strides=(1,1), padding='same', name='conv_10', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_10')(x)
+
+    # Layer 14
+    x = sRelu(x)
+    x = BinaryConv2D(512,kernel_size=3, strides=(1,1), padding='same', name='conv_11', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_11')(x)
+
+    # Layer 15
+    x = sRelu(x)
+    x = BinaryConv2D(256, kernel_size=1, strides=(1,1), padding='same', name='conv_12', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_12')(x)
+
+    # Layer 16
+    x = sRelu(x)
+    x = BinaryConv2D(512, kernel_size=3, strides=(1,1), padding='same', name='conv_13', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_13')(x)
+
+    #Layer 17
+    x = MaxPooling2D(pool_size=(2, 2),padding="same")(x)
+
+    # Layer 18
+    x = sRelu(x)
+    x = BinaryConv2D(1024, kernel_size=3, strides=(1,1), padding='same', name='conv_14', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_14')(x)
+
+    # Layer 19
+    x = sRelu(x)
+    x = BinaryConv2D(512, kernel_size=1, strides=(1,1), padding='same', name='conv_15', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_15')(x)
+
+    # Layer 20
+    x = sRelu(x)
+    x = BinaryConv2D(1024, kernel_size=3, strides=(1,1), padding='same', name='conv_16', use_bias=False)(x)
+    
+    x = BatchNormalization(name='norm_16')(x)
+
+    # Layer 21
+    x = sRelu(x)
+    x = BinaryConv2D(512, kernel_size=1, strides=(1,1), padding='same', name='conv_17', use_bias=False)(x)
+    x = BatchNormalization(name='norm_17')(x)
+
+    # Layer 22
+    x = sRelu(x)
+    x = BinaryConv2D(1024, kernel_size=3, strides=(1,1), padding='same', name='conv_18', use_bias=False)(x)
+    x = BatchNormalization(name='norm_18')(x)
+
+    # Layer 23
+    x = sRelu(x)
+    x = Conv2D(num_classes, kernel_size=1, strides=(1,1), padding='same', name='conv_19', use_bias=False)(x)
+    x = BatchNormalization(name='norm_19')(x)
     # Layer 24 
     x = GlobalAveragePooling2D()(x)
     
